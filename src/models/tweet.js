@@ -5,6 +5,12 @@ const tweetSchema = new mongoose.Schema(
     {
         content: { type: String, required: true },
         email: String,
+        comments: [
+            {
+                type: mongoose.Schema.Types.ObjectId,
+                ref: "Comment",
+            },
+        ],
     },
     { timestamps: true }
 );
