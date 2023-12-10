@@ -1,10 +1,19 @@
-const Tweet = require("../models/tweet");
+const Hashtag = require("../models/hashtag");
 
-class TweetRepository {
+class HashtagRepository {
     async create(data) {
         try {
-            const tweet = await Tweet.create(data);
-            return tweet;
+            const tag = await Hashtag.create(data);
+            return tag;
+        } catch (error) {
+            console.log(error);
+        }
+    }
+
+    async bulkCreate(data) {
+        try {
+            const tags = await Hashtag.insertMany(data);
+            return tags;
         } catch (error) {
             console.log(error);
         }
@@ -12,8 +21,8 @@ class TweetRepository {
 
     async get(id) {
         try {
-            const tweet = await Tweet.findById(id);
-            return tweet;
+            const tag = await Hashtag.findById(id);
+            return tag;
         } catch (error) {
             console.log(error);
         }
@@ -21,12 +30,12 @@ class TweetRepository {
 
     async getWithComments(id) {
         try {
-            const tweet = await Tweet.findById(id)
+            const tag = await Hashtag.findById(id)
                 .populate({
                     path: "comments",
                 })
                 .lean();
-            return tweet;
+            return tag;
         } catch (error) {
             console.log(error);
         }
@@ -34,11 +43,11 @@ class TweetRepository {
 
     // async update(id, data) {
     //     try {
-    //         const tweet = await Tweet.findByIdAndUpdate(id, data, {
+    //         const tag = await tag.findByIdAndUpdate(id, data, {
     //             new: true,
     //         });
     //         // if not used new: true it will give previous data;
-    //         return tweet;
+    //         return tag;
     //     } catch (error) {
     //         console.log(error);
     //     }
@@ -46,21 +55,23 @@ class TweetRepository {
 
     async delete(id) {
         try {
-            const tweet = await Tweet.findByIdAndRemove(id);
-            return tweet;
+            const tag = await Hashtag.findByIdAndRemove(id);
+            return tag;
         } catch (error) {
             console.log(error);
         }
     }
 
-    async getAll(offset, limit) {
+    async findByName(titleList) {
         try {
-            const tweet = await Tweet.find().skip(offset).limit(limit);
-            return tweet;
+            const tags = await Hashtag.find({
+                title: titleList,
+            });
+            return tags;
         } catch (error) {
             console.log(error);
         }
     }
 }
 
-module.exports = TweetRepository;
+module.exports = HashtagRepository;

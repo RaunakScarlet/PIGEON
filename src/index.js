@@ -1,30 +1,16 @@
 const express = require("express");
 const connectDB = require("./config/database.js");
-const Tweet = require("./models/tweet.js");
-const Comment = require("./models/comment.js");
-const TweetRepository = require("./repository/tweet-repository.js");
+const HashtagRepository = require("./repository/hashtag-repository.js");
+const TweetService = require("./services/tweet-service.js");
 
 const app = express();
 
 app.listen(3000, async () => {
     console.log("server started");
     await connectDB();
-    console.log("mongodb connected ");
-    // const tweet = await Tweet.create({
-    // content: "fifth tweet",
-    // email: "d@v.in",
-    // });
-
-    const tweetRepo = new TweetRepository();
-    // const tweet = await tweetRepo.create({
-    //     content: "testing coment with schema",
-    // });
-    // console.log(tweet);
-    // const comment = await Comment.create({
-    //     content: "hope it will success",
-    // });
-    // tweet.comments.push(comment);
-    // await tweet.save();
-    const tweet = await tweetRepo.get("6574cf7f88a1ca4e3194b253");
-    console.log(tweet);
+    const repo = new TweetService();
+    let tags = await repo.create({
+        content: " i am #coding #mmm # bbb",
+    });
+    console.log(tags);
 });
