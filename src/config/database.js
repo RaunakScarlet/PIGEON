@@ -1,6 +1,7 @@
-const mongoose = require('mongoose');
+import mongoose from "mongoose";
 
 const connectDB = async () => {
     await mongoose.connect('mongodb://localhost/pigeon');
 }
-    module.exports = connectDB;
+
+export default connectDB;
