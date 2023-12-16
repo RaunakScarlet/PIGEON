@@ -1,7 +1,9 @@
 import express from "express";
 import bodyParser from "body-parser";
 import connectDB from "./config/database.js";
+
 import passport from "passport";
+import { passportAuth } from "./config/jwt-middleware.js";
 import apiRoutes from "./routes/index.js";
 import {
     TweetRepository,
